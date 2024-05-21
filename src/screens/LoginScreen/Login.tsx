@@ -5,6 +5,8 @@ import LoginButton from '../../components/LoginButton'
 import Logo from '../../components/Logo'
 import AppTitle from '../../components/AppTitle'
 import { validateEmail, validatePassword } from '../../utils/validators'
+import { GoogleSigninButton } from '@react-native-google-signin/google-signin'
+import { signInWithGoogle } from '../../services/AuthService'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -12,7 +14,7 @@ const LoginScreen = () => {
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
-  const handleLogin = () => {
+  const handleLoginWithEmail = () => {
     let isValid = true
 
     // Validar email
@@ -37,6 +39,16 @@ const LoginScreen = () => {
     }
   }
 
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithGoogle()
+      Alert.alert('Success', 'You are logged in with Google!')
+    } catch (error) {
+      Alert.alert('Error', 'Failed to login with Google. Please try again.')
+      console.error('Error during Google authentication', error)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <AppTitle title={'Rick & Morty App'} />
@@ -53,7 +65,13 @@ const LoginScreen = () => {
         errorMessage={passwordError}
       />
 
-      <LoginButton title="Login" onPress={handleLogin} />
+      <LoginButton title="Login" onPress={handleLoginWithEmail} />
+
+      <GoogleSigninButton
+        size={GoogleSigninButton.Size.Wide}
+        color={GoogleSigninButton.Color.Dark}
+        onPress={handleGoogleLogin}
+      />
     </View>
   )
 }

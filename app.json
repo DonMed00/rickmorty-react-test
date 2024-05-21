@@ -3,6 +3,20 @@
     "name": "rickmorty-app",
     "slug": "rickmorty-app",
     "version": "1.0.0",
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      [
+        "expo-dev-client",
+        {
+          "firebase": {
+            "config": {
+              "googleServicesFile": "./google-services.json"
+            }
+          }
+        }
+      ]
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,13 +29,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.donmed.rickmorty"
     },
     "web": {
       "favicon": "./assets/favicon.png"
